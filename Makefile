@@ -24,8 +24,8 @@ golang-run:
 golang-build:
 	scripts/golang_build.sh
 
-docker-run:
-	scripts/docker_run.sh
+docker-run-consul-discovery:
+	scripts/docker_run_consul_discovery.sh
 
-docker-run-multi:
-	scripts/docker_run_multi.sh
+docker-teardown-consul-discovery:
+	scripts/docker_teardown_consul_discovery.sh
