@@ -46,11 +46,9 @@ func main() {
 		os.Exit(0)
 	}()
 
-	fmt.Println("!!!", config.IPAddress, config.ServerPort)
-
 	serviceRegistryWithConsul(config.IPAddress, config.ServerPort)
 	fmt.Printf("Starting Hello Server: %v:%v", config.IPAddress, config.ServerPort)
-	http.HandleFunc("/hello", hello)
+	http.HandleFunc("/hello/api/v1", hello)
 	http.HandleFunc("/health", health)
 	http.ListenAndServe(":"+strconv.Itoa(config.ServerPort), nil)
 }
@@ -65,7 +63,7 @@ func serviceRegistryWithConsul(ipAddress string, port int) {
 	/* Each service instance should have an unique serviceID */
 	serviceID := fmt.Sprintf("hello-%v", myUUID)
 	/* Tag should follow the rule of Fabio: urlprefix- */
-	tags := []string{"urlprefix-/hello"}
+	tags := []string{"urlprefix-/hello/api/v1"}
 
 	// DOCKERPORT This is injected in the `docker run` command. It doesn't exist when the go app runs.
 	dockerContainerPort, _ := strconv.Atoi(os.Getenv("DOCKERPORT"))
