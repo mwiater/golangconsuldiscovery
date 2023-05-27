@@ -11,9 +11,9 @@ import (
 	"syscall"
 
 	"github.com/google/uuid"
-	"github.com/mwiater/golangconsuldiscovery/api"
 	"github.com/mwiater/golangconsuldiscovery/config"
 	"github.com/mwiater/golangconsuldiscovery/consul"
+	"github.com/mwiater/golangconsuldiscovery/hello"
 )
 
 var myUUID = uuid.New()
@@ -40,9 +40,9 @@ func main() {
 	consul.ServiceRegistryWithConsul(config.IPAddress, config.ServerPort, myUUID)
 	fmt.Printf("Starting Hello Server: %v:%v", config.IPAddress, config.ServerPort)
 	http.HandleFunc("/hello/api/v1", func(w http.ResponseWriter, r *http.Request) {
-		api.HelloHandler(w, r, myUUID)
+		hello.HelloHandler(w, r, myUUID)
 	})
 
-	http.HandleFunc("/health", api.HealthHandler)
+	http.HandleFunc("/health", hello.HealthHandler)
 	http.ListenAndServe(":"+strconv.Itoa(config.ServerPort), nil)
 }

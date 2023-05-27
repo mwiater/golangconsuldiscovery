@@ -1,5 +1,5 @@
-// Package api handles requestss
-package api
+// Package hello handles requestss
+package hello
 
 import (
 	"encoding/json"

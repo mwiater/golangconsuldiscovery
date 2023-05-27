@@ -26,7 +26,7 @@ func ServiceRegistryWithConsul(ipAddress string, port int, myUUID uuid.UUID) {
 	/* Tag should follow the rule of Fabio: urlprefix- */
 	tags := []string{"urlprefix-/hello/api/v1"}
 
-	// DOCKERPORT This is injected in the `docker run` command. It doesn't exist when the go app runs.
+	// DOCKERPORT: This is injected in the `docker run` command. It doesn't exist when the go app runs outside of a Docker container
 	dockerContainerPort, _ := strconv.Atoi(os.Getenv("DOCKERPORT"))
 
 	registration := &api.AgentServiceRegistration{
@@ -42,9 +42,9 @@ func ServiceRegistryWithConsul(ipAddress string, port int, myUUID uuid.UUID) {
 		},
 	}
 
-	regiErr := consul.Agent().ServiceRegister(registration)
+	registrationErr := consul.Agent().ServiceRegister(registration)
 
-	if regiErr != nil {
+	if registrationErr != nil {
 		log.Printf("Failed to register service: %s:%v ", ipAddress, dockerContainerPort)
 	} else {
 		log.Printf("successfully register service: %s:%v", ipAddress, dockerContainerPort)
@@ -64,23 +64,4 @@ func NewClient(addr string) (*ConsulClient, error) {
 	return &ConsulClient{
 		client,
 	}, nil
-}
-
-func (c *ConsulClient) Register(id string) error {
-	check := &api.AgentServiceCheck{
-		Interval: "30s",
-		Timeout:  "60s",
-		HTTP:     "http://app:8000/health",
-	}
-	serviceDefinition := &api.AgentServiceRegistration{
-		ID:    id,
-		Name:  id + "_ms",
-		Tags:  []string{"microservice", "golang"},
-		Check: check,
-	}
-	if err := c.Agent().ServiceRegister(serviceDefinition); err != nil {
-		log.Println("error registering service: ", err)
-	}
-
-	return nil
 }
