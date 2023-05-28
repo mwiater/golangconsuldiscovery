@@ -113,7 +113,7 @@ echo ""
 echo -e "${GREENBOLD}Complete!${RESET}"
 echo ""
 
-echo -e "${CYANBOLD}Dashboards may take a few seconds to come on line:${RESET}"
+echo -e "${CYANBOLD}Dashboards may take a few seconds to become available:${RESET}"
 echo -e "  ${CYANBOLD}Console Dashboard is avaiable:${RESET}   http://${IPADDRESS}:${CONSUL_HTTP_PORT}/ui/dc1/services ${RESET}"
 echo -e "  ${CYANBOLD}Fabio Dashboard is avaiable:${RESET}     http://${IPADDRESS}:${FABIO_DASHBOARD_PORT}/routes ${RESET}"
 echo -e "  ${CYANBOLD}Fabio Load Balanced Endpoint is:${RESET} http://${IPADDRESS}:${FABIO_HTTP_PORT}/hello/api/v1 ${RESET}"

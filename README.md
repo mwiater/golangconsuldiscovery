@@ -1,6 +1,13 @@
 # golangconsuldiscovery
 
+## Article reference
+
+This repository is a code companion to my article on Medium: [Replicating and Load Balancing Go Applications in Docker Containers with Consul and Fabio](https://medium.com/@matt.wiater/replicating-and-load-balancing-go-applications-in-docker-containers-with-consul-and-fabio-3ec5eed15154). Please see that post for more details on this implementation.
+
+
 ## Application
+
+### Quickstart
 
 `make docker-run-consul-discovery`
 
@@ -118,24 +125,68 @@ Dashboards may take a few seconds to come on line:
   Fabio Load Balanced Endpoint is: http://192.168.0.99:9000/hello/api/v1
 ```
 
-Teardown: `make docker-teardown-consul-discovery`
-
-## Load testing: Ddosify
-
-### Setup
-
-### Docker-compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-/usr/local/bin/docker-compose version
-
-### ddosify Self-hosted: https://github.com/ddosify/ddosify/tree/master/selfhosted
-
-git clone https://github.com/ddosify/ddosify.git
-cd ddosify/selfhosted
-
-### Start
-docker-compose up -d
-
 ### Teardown
-docker compose down --volumes
+
+`make docker-teardown-consul-discovery`
+
+# Load testing: Ddosify
+
+## Setup
+
+### Install Docker-compose
+
+`sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
+
+`sudo chmod +x /usr/local/bin/docker-compose`
+
+`/usr/local/bin/docker-compose version`
+
+### Ddosify Self-hosted
+
+Ref: https://github.com/ddosify/ddosify/tree/master/selfhosted
+
+
+`git clone https://github.com/ddosify/ddosify.git`
+
+`cd ddosify/selfhosted`
+
+### Ddosify: Start
+
+`docker-compose up -d`
+
+The dashboard will be available, e.g.: http://192.168.0.99:8014
+
+### Ddosify: Teardown
+
+`docker compose down --volumes`
+
+## RESULTS
+
+```
+1 Container Replica
+-------------------
+Total Requests:  6,000
+Request Success: 233
+Request Fail:    5,767
+Avg:             2,840 (ms)
+Min:             7 (ms)
+Max:             9,933 (ms)
+
+4 Container Replicas
+--------------------
+Total Requests:  6,000
+Request Success: 5,796
+Request Fail:    204
+Avg:             290 (ms)
+Min:             5 (ms)
+Max:             9,873 (ms)
+
+8 Container Replicas
+--------------------
+Total Requests:  6,000
+Request Success: 6,000
+Request Fail:    0
+Avg:             17 (ms)
+Min:             5 (ms)
+Max:             86 (ms)
+```
