@@ -38,6 +38,7 @@ func main() {
 	}()
 
 	consul.ServiceRegistryWithConsul(config.IPAddress, config.ServerPort, myUUID)
+
 	fmt.Printf("Starting Hello Server: %v:%v", config.IPAddress, config.ServerPort)
 	http.HandleFunc("/hello/api/v1", func(w http.ResponseWriter, r *http.Request) {
 		hello.HelloHandler(w, r, myUUID)
