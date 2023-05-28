@@ -2,7 +2,7 @@
 
 ## Article reference
 
-This repository is a code companion to my article on Medium: [Replicating and Load Balancing Go Applications in Docker Containers with Consul and Fabio](https://medium.com/@matt.wiater/replicating-and-load-balancing-go-applications-in-docker-containers-with-consul-and-fabio-3ec5eed15154). Please see that post for more details on this implementation.
+This repository is a code companion to my article on Medium: **[Replicating and Load Balancing Go Applications in Docker Containers with Consul and Fabio](https://medium.com/@matt.wiater/replicating-and-load-balancing-go-applications-in-docker-containers-with-consul-and-fabio-3ec5eed15154)**. Please see that post for more details on this implementation.
 
 
 ## Application
